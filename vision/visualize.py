@@ -22,11 +22,19 @@ def highlight_box(image, box, color = colors[0], width = defaultwidth,
     Highlights the bounding box on the given image.
     """
     draw = ImageDraw.Draw(image)
+    center_x = (box[0]+box[2])/2
+    center_y = (box[1]+box[3])/2
     if not box.occluded:
         width = width * 2
     for i in range(width):
-        draw.rectangle((box[0] + i, box[1] + i, box[2] - i, box[3] - i),
-                       outline=color)
+        #draw.rectangle((box[0] + i, box[1] + i, box[2] - i, box[3] - i),
+        #               outline=color)
+        draw.ellipse((center_x - 10 + i, center_y - 10 + i, center_x + 10 - i, center_y + 10 - i),
+                        outline=color)
+    for i in range(3):
+        draw.ellipse((center_x - 3 + i, center_y - 3 + i, center_x + 3 - i, center_y + 3 - i),
+                        outline=color)
+
     if font:
         ypos = box.ytl
         for attribute in box.attributes:
